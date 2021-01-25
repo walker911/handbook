@@ -31,15 +31,7 @@ public class BankStatementProcessor {
     }
 
     public double calculateTotalInMonth(Month month) {
-        double total = 0d;
-
-        for (BankTransaction transaction : transactions) {
-            if (transaction.getDate().getMonth() == month) {
-                total += transaction.getAmount();
-            }
-        }
-
-        return total;
+        return summarizeTransactions(((accumulator, transaction) -> transaction.getDate().getMonth() == month ? accumulator + transaction.getAmount() : accumulator));
     }
 
     public double calculateTotalForCategory(String category) {
@@ -61,27 +53,11 @@ public class BankStatementProcessor {
      * @return 交易列表
      */
     public List<BankTransaction> findTransactionsGreaterThanEqual(double amount) {
-        List<BankTransaction> result = new ArrayList<>();
-
-        for (BankTransaction transaction : transactions) {
-            if (transaction.getAmount() >= amount) {
-                result.add(transaction);
-            }
-        }
-
-        return result;
+        return findTransactions(transaction -> transaction.getAmount() >= amount);
     }
 
     public List<BankTransaction> findTransactionsInMonth(Month month) {
-        List<BankTransaction> result = new ArrayList<>();
-
-        for (BankTransaction transaction : transactions) {
-            if (transaction.getDate().getMonth() == month) {
-                result.add(transaction);
-            }
-        }
-
-        return result;
+        return findTransactions(transaction -> transaction.getDate().getMonth() == month);
     }
 
     public List<BankTransaction> findTransactions(BankTransactionFilter filter) {
@@ -95,4 +71,15 @@ public class BankStatementProcessor {
 
         return result;
     }
+
+    public double summarizeTransactions(BankTransactionSummarizer summarizer) {
+        double result = 0d;
+
+        for (BankTransaction transaction : transactions) {
+            result = summarizer.summarize(result, transaction);
+        }
+
+        return result;
+    }
+
 }
