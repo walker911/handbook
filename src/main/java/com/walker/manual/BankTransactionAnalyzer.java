@@ -35,6 +35,9 @@ public class BankTransactionAnalyzer {
         System.out.println("Transactions in January " + processor.calculateTotalInMonth(Month.JANUARY));
 
         System.out.println("The total salary received is " + processor.calculateTotalForCategory("Salary"));
+
+        List<BankTransaction> transactions = processor.findTransactions(transaction ->
+                transaction.getDate().getMonth() == Month.FEBRUARY && transaction.getAmount() >= 1000);
     }
 
 }
