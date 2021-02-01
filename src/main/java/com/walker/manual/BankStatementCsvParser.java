@@ -21,6 +21,12 @@ public class BankStatementCsvParser implements BankStatementParser {
     public BankTransaction parseFrom(String line) {
         final String[] columns = line.split(",");
 
+        // validate
+        OverlySpecificBankStatementValidator validator = new OverlySpecificBankStatementValidator(columns[2], columns[0], columns[1]);
+        Notification notification = validator.validate();
+        if (notification.hasErrors()) {
+        }
+
         final LocalDate date = LocalDate.parse(columns[0], DATE_PATTERN);
         final double amount = Double.parseDouble(columns[1]);
         final String description = columns[2];
