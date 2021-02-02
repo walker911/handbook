@@ -61,7 +61,11 @@ public class DocumentManagementSystem {
      *
      * @return
      */
-    List<Document> contents() {
+    public List<Document> contents() {
+        return documents;
+    }
+
+    public List<Document> search(String query) {
         return null;
     }
 }
