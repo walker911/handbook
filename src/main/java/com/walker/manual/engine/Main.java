@@ -10,6 +10,17 @@ package com.walker.manual.engine;
  */
 public class Main {
     public static void main(String[] args) {
+        Facts facts = new Facts();
+        facts.addFact("jobTitle", "CEO");
+        facts.addFact("name", "Mark");
+
+        BusinessRuleEngine engine = new BusinessRuleEngine(facts);
+        engine.addAction(fact -> {
+            final String jobTitle = fact.getFact("jobTitle");
+            if ("CEO".equals(jobTitle)) {
+                final String name = fact.getFact("name");
+            }
+        });
 
     }
 }
