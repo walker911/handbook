@@ -15,7 +15,7 @@ public class Main {
         facts.addFact("name", "Mark");
 
         BusinessRuleEngine engine = new BusinessRuleEngine(facts);
-        engine.addAction(fact -> {
+        engine.addRule(fact -> {
             final String jobTitle = fact.getFact("jobTitle");
             if ("CEO".equals(jobTitle)) {
                 final String name = fact.getFact("name");

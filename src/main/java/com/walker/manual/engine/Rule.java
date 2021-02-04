@@ -6,9 +6,9 @@ package com.walker.manual.engine;
  * </p>
  *
  * @author mu qin
- * @date 2021/2/2
+ * @date 2021/2/4
  */
 @FunctionalInterface
-public interface Action {
-    void execute(Facts facts);
+public interface Rule {
+    void perform(Facts facts);
 }

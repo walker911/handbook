@@ -3,6 +3,7 @@ package com.walker.manual;
 import com.walker.manual.engine.Action;
 import com.walker.manual.engine.BusinessRuleEngine;
 import com.walker.manual.engine.Facts;
+import com.walker.manual.engine.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +31,8 @@ public class BusinessRuleEngineTest {
     public void shouldAddTwoActions() {
         final BusinessRuleEngine engine = new BusinessRuleEngine(null);
 
-        engine.addAction((facts) -> {});
-        engine.addAction((facts) -> {});
+        engine.addRule((facts) -> {});
+        engine.addRule((facts) -> {});
 
         Assertions.assertEquals(2, engine.count());
     }
@@ -39,23 +40,23 @@ public class BusinessRuleEngineTest {
     @Test
     public void shouldExecuteOneAction() {
         final BusinessRuleEngine engine = new BusinessRuleEngine(null);
-        final Action mockAction = mock(Action.class);
+        final Rule mockRule = mock(Rule.class);
 
-        engine.addAction(mockAction);
+        engine.addRule(mockRule);
         engine.run();
 
-        verify(mockAction).perform(null);
+        verify(mockRule).perform(null);
     }
 
     @Test
     public void shouldPerformAnActionWithFacts() {
-        final Action mockAction = mock(Action.class);
+        final Rule mockRule = mock(Rule.class);
         final Facts facts = mock(Facts.class);
         final BusinessRuleEngine engine = new BusinessRuleEngine(facts);
 
-        engine.addAction(mockAction);
+        engine.addRule(mockRule);
         engine.run();
 
-        verify(mockAction).perform(facts);
+        verify(mockRule).perform(facts);
     }
 }
